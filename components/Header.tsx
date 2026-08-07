@@ -1,0 +1,14 @@
+
+import { Link } from "react-router-dom";
+import { Menu, Bell, Languages, Building2, ChevronDown } from "lucide-react";
+import { Avatar, AvatarFallback } from "./ui/avatar";
+import { Badge } from "./ui/badge";
+import { Button } from "./ui/button";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet";
+
+        export default function Header({ projectName = "MuniSubmit", variant = "guest" }: { projectName?: string; variant?: "guest" | "applicant" | "admin" }) {
+        return (
+            <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur"><div className="mx-auto flex min-h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8"><Link to={variant === "admin" ? "/admin/dashboard" : variant === "applicant" ? "/dashboard" : "/"} className="flex items-center gap-2 font-bold text-primary"><span className="grid size-9 place-items-center rounded-lg bg-primary text-primary-foreground"><Building2 className="size-5" /></span><span>{projectName}</span></Link><nav className="hidden items-center gap-2 md:flex" aria-label="Primary navigation">{variant === "guest" ? <><Button variant="ghost" asChild><Link to="/">Home</Link></Button><Button variant="ghost" asChild><Link to="/api/webhooks/munirom">Webhook status</Link></Button><Button variant="outline" asChild><Link to="/login">Sign in</Link></Button></> : <><Button variant="ghost" size="icon" aria-label="Notifications"><Bell className="size-5" /></Button>{variant === "admin" && <Badge>Production</Badge>}<DropdownMenu><DropdownMenuTrigger asChild><Button variant="ghost" className="gap-2"><Avatar className="size-8"><AvatarFallback>{variant === "admin" ? "MA" : "JS"}</AvatarFallback></Avatar><span>{variant === "admin" ? "Municipal admin" : "Jordan Smith"}</span><ChevronDown className="size-4" /></Button></DropdownMenuTrigger><DropdownMenuContent align="end"><DropdownMenuItem>Account settings</DropdownMenuItem><DropdownMenuItem>Sign out</DropdownMenuItem></DropdownMenuContent></DropdownMenu></>}</nav><Sheet><SheetTrigger asChild><Button variant="ghost" size="icon" className="md:hidden" aria-label="Open navigation"><Menu /></Button></SheetTrigger><SheetContent><SheetHeader><SheetTitle>{projectName}</SheetTitle></SheetHeader><div className="mt-6 grid gap-2"><Button variant="ghost" className="justify-start" asChild><Link to="/">Home</Link></Button><Button variant="ghost" className="justify-start" asChild><Link to="/dashboard">My applications</Link></Button><Button variant="ghost" className="justify-start" asChild><Link to="/login">Sign in</Link></Button><Button variant="ghost" className="justify-start"><Languages className="mr-2 size-4" /> Français</Button></div></SheetContent></Sheet></div></header>
+        );
+        }
